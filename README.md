@@ -5,4 +5,4 @@ Make sure that nodejs installed. Clone repository and cd to calculatorApp folder
 npm install
 npm start
 ```
-Go to the (localhost:8000/app/) in your browser.
+Go to the [localhost:8000/app/](http://localhost:8000/app/) in your browser.
