@@ -5,20 +5,31 @@ CalcServices.factory('calculate',[calculate]);
 
 function calculate () {
   return {
+    //Handles all input and calculation
     input:function (result, strN, evaluated){
-        if (evaluated) {
+        //'=' was pressed and number is pressed now
+        if (evaluated && !isNaN(strN)) {
           result = '';
-          evaluated = false;}
+          evaluated = false;
+        } else {
+          evaluated = false;
+        }
+        //There was no input and operation button was pressed, add operation to zero
         if (!result && isNaN(strN)){result="0" + strN;}
+        //It is zero and number pressed, remove zero and display number
         if (result === "0" && !isNaN(strN)){result= '';}
+        //IF we get error we can only press reset
         if (result !== 'Error'){
-          if (strN == '=') {
+          if (strN == '=') { //if '=' is pressed
             evaluated = true;
+            //if the last character is not number
             isNaN(result.charAt(result.length-1)) ? result = eval(result + '0') : result = eval(result);
             } else {
               if (isNaN(result.charAt(result.length - 1)) && isNaN(strN)){
                 result = result.slice(0, result.length - 1) + strN;
               } else {
+                console.log(result.split('.').length-1);
+                if (result.split('.').length-1===1 && strN==='.'){strN='';}
                 result += strN;
               }
             }
