@@ -10,7 +10,7 @@ var CalcApp = angular.module('CalcApp',[
 CalcApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/calculator',{
+      when('/',{
       templateUrl:'partials/calc-small.html',
       controller:'CalcCtrl',
       controllerAs:'ctrl'
