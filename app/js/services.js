@@ -5,11 +5,15 @@ CalcServices.factory('calculate',[calculate]);
 
 function calculate () {
   return {
-    input:function (result, strN){
+    input:function (result, strN, evaluated){
+        if (evaluated) {
+          result = '';
+          evaluated = false;}
         if (!result && isNaN(strN)){result="0" + strN;}
         if (result === "0" && !isNaN(strN)){result= '';}
         if (result !== 'Error'){
           if (strN == '=') {
+            evaluated = true;
             isNaN(result.charAt(result.length-1)) ? result = eval(result + '0') : result = eval(result);
             } else {
               if (isNaN(result.charAt(result.length - 1)) && isNaN(strN)){
@@ -18,9 +22,10 @@ function calculate () {
                 result += strN;
               }
             }
-            return result === Infinity || result !== result ? 'Error' : result.toString();
+            result = result === Infinity || result !== result ? 'Error' : result.toString();
+            return [result, evaluated];
         } else {
-          return 'Error';
+          return ['Error',evaluated];
         }
       },
     plusMinus:function (string){

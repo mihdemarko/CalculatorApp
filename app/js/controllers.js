@@ -13,11 +13,15 @@ function CalcCtrl ($scope, calculate){
   this.memoryInput = calculate.memoryInput;
   this.resetCalc = function(){
     this.numb = "";
+    evaluated = false;
     return this.numb;
   };
+  var evaluated = false;
   this.getN = function(index) {
-    this.numb = calculate.input(this.numb,this.row[index]);
-    this.numb === "Error" ? this.style={'color':'red'}:this.style={'color':'black'};
+    console.log(evaluated);
+    var res = calculate.input(this.numb,this.row[index],evaluated);
+    this.numb = res[0];
+    evaluated = res[1];
     return this.numb;
   };
 
