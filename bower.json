@@ -1,0 +1,12 @@
+{
+  "name": "calculator",
+  "description": "A calculator with AngularJS",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.5.0",
+    "bootstrap": "~3.3.6",
+    "angular-route": "~1.5.0"
+  }
+}
