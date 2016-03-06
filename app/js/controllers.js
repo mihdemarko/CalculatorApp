@@ -13,6 +13,7 @@ function CalcCtrl ($scope, calculate){
   //Value in memory
   this.memory = 0;
   this.memoryInput = calculate.memoryInput;
+  this.memoryOutput = calculate.memotyOutput;
   this.resetCalc = function(){
     this.numb = "";
     evaluated = false;

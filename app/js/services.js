@@ -22,17 +22,19 @@ function calculate () {
         if (result !== 'Error'){
           if (strN == '=') { //if '=' is pressed
             evaluated = true;
-            //if the last character is not number
+            //if the last character is not number evaluate it wit zero
             isNaN(result.charAt(result.length-1)) ? result = eval(result + '0') : result = eval(result);
             } else {
+              //change not number last characyer if an input is not number
               if (isNaN(result.charAt(result.length - 1)) && isNaN(strN)){
                 result = result.slice(0, result.length - 1) + strN;
               } else {
-                console.log(result.split('.').length-1);
+                //It can be only one '.'
                 if (result.split('.').length-1===1 && strN==='.'){strN='';}
                 result += strN;
               }
             }
+            //if we get Infinity or NaN (n/0 or 0/0), we get error, like in good old Casio calc
             result = result === Infinity || result !== result ? 'Error' : result.toString();
             return [result, evaluated];
         } else {
@@ -66,6 +68,14 @@ function calculate () {
       }
       if (!isNaN(string)){
         return parseFloat(memory) + parseFloat(string);
+      }
+    },
+    memotyOutput:function (memory, string) {
+      var lastChar = string.charAt(string.length-1);
+      if (isNaN(lastChar) && lastChar!=='.'){
+        return string + memory.toString();
+      } else {
+        return memory.toString();
       }
     }
     };
