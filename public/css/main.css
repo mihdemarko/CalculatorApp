@@ -1,0 +1,128 @@
+/* app css stylesheet */
+
+h1 {
+  font-size: 28px;
+}
+
+@media (min-width: 480px){
+  h1 {
+    font-size: 42px;
+  }
+}
+
+
+#calc-body {
+  width:280px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  text-align: right;
+  margin: auto;
+  box-shadow: 7px 7px 5px gray;
+  background: #595959;
+  background: -webkit-linear-gradient(#262626, #595959); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#262626, #595959); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#262626, #595959); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#262626, #595959); /* Standard syntax */
+}
+
+#calc-body .row #buttons, #calc-body .row #buttons2{
+  text-align: left;
+  width:100%;
+}
+
+@media (min-width: 768px){
+  #calc-body .row #buttons{
+    text-align: left;
+    width :50%;
+  }
+  #calc-body .row #buttons2{
+    text-align: right;
+    width :50%;
+  }
+}
+
+@media (min-width: 480px){
+  #calc-body {
+    width: 300px;
+  }
+}
+
+@media (min-width: 768px){
+  #calc-body {
+    padding: 20px;
+    width: 400px;
+    height: 500px;
+  }
+}
+
+
+.view{
+  display: flex;
+  margin-top: 5%;
+}
+
+
+.col-xs-3 {
+  width:25%;
+  margin-top: 10px;
+}
+
+
+.btn-lg {
+  width: 100%;
+}
+
+@media (min-width: 768px){
+  .btn-lg {
+    height:60px;
+  }
+}
+
+.btn-danger{
+  width:154px;
+}
+
+@media (min-width: 768px){
+  .btn-danger {
+    width:70px;
+  }
+}
+
+
+.form-control {
+  width:90%;
+  margin: auto;
+  margin-top: 10px;
+  text-align: right;
+  border: 1px solid gray;
+}
+
+.form-control[disabled], .form-control[readonly], .form-control{
+  background-color: #ffffe6;
+}
+
+.form-control::-moz-placeholder {
+  color: #000;
+  opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+  color: #000;
+}
+.form-control::-webkit-input-placeholder {
+  color: #000;
+}
+
+#buttons {
+  text-align: left;
+}
+
+#calcHeader {
+  text-align: left;
+  text-shadow: 2px 2px 2px black;
+  color:#ffd480;
+}
+.col-xs-12 p {
+  margin-top: 5px;
+  color: white;
+}

@@ -1,0 +1,49 @@
+
+
+<div class="col-sm-6 col-xs-12 " id="calc-body">
+  <div class="row">
+    <div class="col-xs-12" id="calcHeader"><h2>Cazio</h2></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-xs-12" id="buttons">
+      <button type="button" class="btn btn-danger btn-sm" ng-click="ctrl.resetCalc(ctrl.numb)">Reset</button>
+    </div>
+    <div class="col-sm-6 col-xs-12" id="buttons2">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.numb = ctrl.plusMinus(ctrl.numb)">+/-</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memory = 0">MC</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.numb = ctrl.memoryOutput(ctrl.memory,ctrl.numb)">MR</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memory = ctrl.memoryInput(ctrl.memory,ctrl.numb)">M+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <p>{{ctrl.memory|zero}}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <input type="text" class="form-control" placeholder="{{ctrl.numb|zero}}" readonly>
+  </div>
+  <div class="row">
+
+    <div class="col-xs-3" ng-repeat="val in ctrl.row track by $index">
+      <button class="btn btn-default btn-lg" ng-model = "ctrl.numb" ng-click="ctrl.getN([$index])">{{val}}</button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
