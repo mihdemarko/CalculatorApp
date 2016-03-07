@@ -6,7 +6,7 @@ CalcServices.factory('calculate',[calculate]);
 function calculate () {
   return {
     //Handles all input and calculation
-    input:function (result, strN, evaluated,lastOper,numbers,operators){
+    input:function (result, strN, evaluated,numbers,operators){
       if (!isNaN(strN) || strN === '.'){
         if (evaluated){
           numbers[numbers.length-1] = strN.toString();
@@ -28,19 +28,7 @@ function calculate () {
       } else {
         operators[operators.length-2] = strN;
       }
-      console.log(numbers);
-      console.log(operators);
-
-
-
-
-
-
-
         return [numbers, operators, evaluated];
-        // } else {
-        //   return ['Error',evaluated];
-        // }
       },
 
     createString: function(numbers,opers){

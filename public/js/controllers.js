@@ -9,6 +9,7 @@ function CalcCtrl ($scope, calculate){
   this.row = [7,8,9,'/',4,5,6,'*',1,2,3,'-','0','.','=','+'];
   //The string which evaluated
   this.numb = "";
+  // Add plus or minus with +/- button
   this.plusMinus = function(numbers){
     numbers = calculate.plusMinus(numbers);
     this.numb = calculate.createString(numbers,operators);
@@ -20,6 +21,7 @@ function CalcCtrl ($scope, calculate){
     numbers = calculate.memotyOutput(memory,numbs);
     this.numb = calculate.createString(numbers,operators);
   };
+  // Reset button reset all except memory
   this.resetCalc = function(){
     this.numb = "";
     numbers = [''];
@@ -34,18 +36,21 @@ function CalcCtrl ($scope, calculate){
   var operators = [''];
   var res = [];
   this.getN = function(index) {
-    //Array [0] is the string for calculation, [1] is evaluated boolean
+    //Array [0] is array of numbers, [1] is array of operators, [3] is evaluated boolean
+    //if = pressed call the evaluate service
     if (this.row[index]==='='){
       res = calculate.evaluate(this.numb,numbers,operators);
       numbers = res[0];
       operators = res[1];
       evaluated = res[2];
     }else{
-      res = calculate.input(this.numb,this.row[index],evaluated, lastOper,numbers,operators);
+      // call input service
+      res = calculate.input(this.numb,this.row[index],evaluated, numbers,operators);
       numbers = res[0];
       operators = res[1];
       evaluated = res[2];
     }
+    // join numbers and operators into string
     this.numb = calculate.createString(numbers,operators);
     this.numbers = numbers;
     // return this.numb;
