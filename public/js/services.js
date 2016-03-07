@@ -6,76 +6,91 @@ CalcServices.factory('calculate',[calculate]);
 function calculate () {
   return {
     //Handles all input and calculation
-    input:function (result, strN, evaluated){
-        //'=' was pressed and number is pressed now
-        if (evaluated && !isNaN(strN)) {
-          result = '';
+    input:function (result, strN, evaluated,lastOper,numbers,operators){
+      if (!isNaN(strN) || strN === '.'){
+        if (evaluated){
+          numbers[numbers.length-1] = strN.toString();
+          if (strN === '.'){numbers[numbers.length-1] = '0.';}
           evaluated = false;
         } else {
-          evaluated = false;
-        }
-        //There was no input and operation button was pressed, add operation to zero
-        if (!result && isNaN(strN)){result="0" + strN;}
-        //It is zero and number pressed, remove zero and display number
-        if (result === "0" && !isNaN(strN)){result= '';}
-        //IF we get error we can only press reset
-        if (result !== 'Error'){
-          if (strN == '=') { //if '=' is pressed
-            evaluated = true;
-            //if the last character is not number evaluate it wit zero
-            isNaN(result.charAt(result.length-1)) ? result = eval(result + '0') : result = eval(result);
-            } else {
-              //change not number last characyer if an input is not number
-              if (isNaN(result.charAt(result.length - 1)) && isNaN(strN)){
-                result = result.slice(0, result.length - 1) + strN;
-              } else {
-                //It can be only one '.'
-                if (result.split('.').length-1===1 && strN==='.'){strN='';}
-                result += strN;
-              }
-            }
-            //if we get Infinity or NaN (n/0 or 0/0), we get error, like in good old Casio calc
-            result = result === Infinity || result !== result ? 'Error' : result.toString();
-            return [result, evaluated];
-        } else {
-          return ['Error',evaluated];
-        }
-      },
-    plusMinus:function (string){
-      var oper = ['*','/','+','-'];
-      var res = -1;
-        for (var i in oper){
-          if (string.lastIndexOf(oper[i])>res){res=string.lastIndexOf(oper[i]);}
-        }
-      if (res!==-1){
-        if (string.charAt(res) !== '-' && string.charAt(res) !== '+'){
-          string = string.substr(0,res+1)+'-'+string.substr(res+1,string.length);
-          } else if (string.charAt(res) ==='+'){
-            string = string.substr(0,res)+'-'+string.substr(res+1,string.length);
-          }else if (!isNaN(string.charAt(res-1))){
-            string = string.substr(0,res)+'+'+string.substr(res+1,string.length);
-          } else {
-            string = string.substr(0,res)+string.substr(res+1,string.length);
+          if (!numbers[numbers.length-1] && strN==='.'){numbers[numbers.length-1]='0';}
+          var hasDot = (numbers[numbers.length-1].split('.').length-1)===1;
+          if (hasDot && strN==='.'){
+            strN = '';
           }
-      }else{
-        string = '-' + string;
-      }
-      return string === '-' ? '':string;
-    },
-    memoryInput:function(memory, string){
-      if (!string){
-        string = 0;
-      }
-      if (!isNaN(string)){
-        return parseFloat(memory) + parseFloat(string);
-      }
-    },
-    memotyOutput:function (memory, string) {
-      var lastChar = string.charAt(string.length-1);
-      if (isNaN(lastChar) && lastChar!=='.'){
-        return string + memory.toString();
+          numbers[numbers.length-1] += strN.toString();
+        }
+
+      } else if (numbers[numbers.length-1]){
+        operators[operators.length-1] += strN;
+        operators.push('');
+        numbers.push('');
       } else {
-        return memory.toString();
+        operators[operators.length-2] = strN;
+      }
+      console.log(numbers);
+      console.log(operators);
+
+
+
+
+
+
+
+        return [numbers, operators, evaluated];
+        // } else {
+        //   return ['Error',evaluated];
+        // }
+      },
+
+    createString: function(numbers,opers){
+
+      var string = '';
+      for (var i in numbers){
+        if (numbers[i]==='Error'){
+          numbers[i]='';
+          return 'Error';}
+        string += numbers[i]+opers[i];
+      }
+      return string;
+    },
+    evaluate: function(str,numbers,operators){
+      if (isNaN(str.charAt(str.length-1))){str +='0';}
+      var res = eval(str).toString();
+      var err = res === 'Infinity' || res === '-Infinity' || res === 'NaN';
+      numbers = [res];
+      operators = [''];
+      if (err){
+        numbers = ['Error'];
+        operators = [''];
+      }
+      console.log(err);
+      return [numbers,operators,true,err];
+    },
+    plusMinus:function (numbers){
+
+      if (numbers && numbers[numbers.length-1]){
+        if (numbers[numbers.length-1].charAt(0)!=='-'){
+          numbers[numbers.length-1] = '-' + numbers[numbers.length-1];
+        } else {
+          numbers[numbers.length-1] = numbers[numbers.length-1].replace("-","");
+        }
+
+      }
+      return numbers;
+    },
+    memoryInput:function(memory, numbers){
+      if (numbers && numbers[numbers.length-1]){
+        memory += parseFloat(numbers[numbers.length-1]);
+        return memory;
+      }
+    },
+    memotyOutput:function (memory, numbers) {
+      if (memory){
+        numbers[numbers.length-1] = memory.toString();
+        return numbers;
+      } else {
+        return numbers;
       }
     }
     };
