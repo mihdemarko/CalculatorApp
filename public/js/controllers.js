@@ -18,9 +18,11 @@ function CalcCtrl ($scope, calculate){
   };
   //Value in memory
   this.memory = 0;
-  this.memoryInput = calculate.memoryInput;
-  this.memoryOutput = function(memory,numbs){
-    numbers = calculate.memotyOutput(memory,numbs);
+  this.memoryInput = function () {
+    this.memory = calculate.memoryInput(this.memory,numbers);
+  };
+  this.memoryOutput = function(){
+    numbers = calculate.memotyOutput(this.memory,numbers);
     this.numb = calculate.createString(numbers,operators);
   };
   // Reset button reset all except memory

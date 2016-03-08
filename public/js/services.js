@@ -1,9 +1,16 @@
 'use strict';
+
 var CalcServices = angular.module('CalcServices', []);
 CalcServices.factory('calculate',[calculate]);
-
+Object.defineProperty(Array.prototype, "last", {
+    enumerable: false,
+    get: function (){return this[this.length-1];},
+    set: function (val){this[this.length-1] = val;}
+});
 
 function calculate () {
+
+
   return {
     //Handles all input and calculation
     input:function (result, strN, evaluated,numbers,operators){
@@ -13,21 +20,21 @@ function calculate () {
         // in common case number input creates a number, dot creates a dot
         // every inpot concatenates in the numbers array current cell
         if (evaluated){
-          numbers[numbers.length-1] = strN.toString();
-          if (strN === '.'){numbers[numbers.length-1] = '0.';}
+          numbers.last = strN.toString();
+          if (strN === '.'){numbers.last = '0.';}
           evaluated = false;
         } else {
-          if (!numbers[numbers.length-1] && strN==='.'){numbers[numbers.length-1]='0';}
-          var hasDot = (numbers[numbers.length-1].split('.').length-1)===1;
+          if (!numbers.last && strN==='.'){numbers.last='0';}
+          var hasDot = (numbers.last.split('.').length-1)===1;
           if (hasDot && strN==='.'){ // it can be only one dot in number
             strN = '';
           }
-          numbers[numbers.length-1] += strN.toString();
+          numbers.last += strN.toString();
         }
         // we can input operator if there is number in numbers array
         // every operator input creates new cell in numbers and operators arrays
-      } else if (numbers[numbers.length-1]){
-        operators[operators.length-1] += strN;
+      } else if (numbers.last){
+        operators.last += strN;
         operators.push('');
         numbers.push('');
       } else {
@@ -49,6 +56,7 @@ function calculate () {
     },
     // evaluates an expression (string), if we get Infinity, creates Error
     evaluate: function(str,numbers,operators){
+      if (!str){return [numbers,operators,false,err];}
       if (isNaN(str.charAt(str.length-1))){str +='0';}
       var res = eval(str).toString();
       var err = res === 'Infinity' || res === '-Infinity' || res === 'NaN';
@@ -73,11 +81,11 @@ function calculate () {
           return [numbers,operators];
         }
       }
-      if (numbers && numbers[numbers.length-1]){
-        if (numbers[numbers.length-1].charAt(0)!=='-'){
-          numbers[numbers.length-1] = '-' + numbers[numbers.length-1];
+      if (numbers && numbers.last){
+        if (numbers.last.charAt(0)!=='-'){
+          numbers.last = '-' + numbers.last;
         } else {
-          numbers[numbers.length-1] = numbers[numbers.length-1].replace("-","");
+          numbers.last = numbers.last.replace("-","");
         }
 
       }
@@ -85,15 +93,17 @@ function calculate () {
     },
     // memory button saves last number
     memoryInput:function(memory, numbers){
-      if (numbers && numbers[numbers.length-1]){
-        memory += parseFloat(numbers[numbers.length-1]);
+      memory = parseFloat(memory);
+      if (numbers && numbers.last){
+        memory += parseFloat(numbers.last);
         return memory;
-      }
+      } else {return memory;}
     },
     //memory output overwrites last number
     memotyOutput:function (memory, numbers) {
+      console.log(numbers);
       if (memory){
-        numbers[numbers.length-1] = memory.toString();
+        numbers.last = memory.toString();
         return numbers;
       } else {
         return numbers;

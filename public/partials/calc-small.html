@@ -12,8 +12,8 @@
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.plusMinus(ctrl.numbers)">+/-</button>
         <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memory = 0">MC</button>
-        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memoryOutput(ctrl.memory,ctrl.numbers)">MR</button>
-        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memory = ctrl.memoryInput(ctrl.memory,ctrl.numbers)">M+</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memoryOutput()">MR</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.memoryInput()">M+</button>
       </div>
     </div>
   </div>
@@ -33,7 +33,6 @@
       <button class="btn btn-default btn-lg" ng-click="ctrl.getN([$index])">{{val}}</button>
     </div>
   </div>
-
 </div>
 
 
