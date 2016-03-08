@@ -10,8 +10,10 @@ function CalcCtrl ($scope, calculate){
   //The string which evaluated
   this.numb = "";
   // Add plus or minus with +/- button
-  this.plusMinus = function(numbers){
-    numbers = calculate.plusMinus(numbers);
+  this.plusMinus = function(){
+    res = calculate.plusMinus(numbers,operators);
+    numbers = res[0];
+    operators = res[1];
     this.numb = calculate.createString(numbers,operators);
   };
   //Value in memory
