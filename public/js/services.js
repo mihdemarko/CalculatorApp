@@ -2,6 +2,8 @@
 
 var CalcServices = angular.module('CalcServices', []);
 CalcServices.factory('calculate',[calculate]);
+
+// shortcat for getting last item in array
 Object.defineProperty(Array.prototype, "last", {
     enumerable: false,
     get: function (){return this[this.length-1];},
@@ -101,7 +103,6 @@ function calculate () {
     },
     //memory output overwrites last number
     memotyOutput:function (memory, numbers) {
-      console.log(numbers);
       if (memory){
         numbers.last = memory.toString();
         return numbers;
