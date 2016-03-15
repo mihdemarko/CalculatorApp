@@ -23,10 +23,10 @@ function calculate () {
         // every inpot concatenates in the numbers array current cell
         if (evaluated){
           numbers.last = strN.toString();
-          if (strN === '.'){numbers.last = '0.';}
+          if (strN === '.' || strN === '0'){numbers.last = '0.';}
           evaluated = false;
         } else {
-          if (!numbers.last && strN==='.'){numbers.last='0';}
+          if (!numbers.last && (strN==='.'||strN==='0')){strN='0.';}
           var hasDot = (numbers.last.split('.').length-1)===1;
           if (hasDot && strN==='.'){ // it can be only one dot in number
             strN = '';
